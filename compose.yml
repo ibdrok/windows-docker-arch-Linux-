@@ -1,0 +1,21 @@
+services:
+  qemu:
+    container_name: qemu
+    image: qemux/qemu-arm
+    environment:
+      BOOT: "https://downloads.raspberrypi.com/rpd_x86/images/rpd_x86-2022-07-04/2022-07-01-raspios-bullseye-i386.iso"
+      DISK_SIZE: "90G"
+      RAM_SIZE: "8G"
+      CPU_CORES: "4"
+      VGA: "virtio-gpu"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+    volumes:
+      - ./qemu:/storage
+    restart: always
+    stop_grace_period: 2m
